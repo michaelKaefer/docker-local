@@ -1,0 +1,18 @@
+version: '3.5'
+
+services:
+
+    varnish:
+        container_name: varnish
+        image: varnish
+        ports:
+            - 8099:80
+        volumes:
+            # Read only (achieved by using the :ro flag)
+            - ${LOCAL_CONFIG_FILE}:/etc/varnish/default.vcl:ro
+        # As opposed to volumes and bind mounts, a tmpfs mount is temporary, and only persisted in the host memory.
+        # When the container stops, the tmpfs mount is removed, and files written there won’t be persisted.
+        # Files on this file system are allowed to be executed (achieved by using the :exec flag)
+        tmpfs:
+            - /var/lib/varnish:exec
+        restart: always

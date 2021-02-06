@@ -1,0 +1,19 @@
+version: '3.5'
+
+services:
+
+    rabbitmq:
+        container_name: rabbitmq
+        # Use the official image which comes with the management plugin installed
+        image: rabbitmq:3-management-alpine
+        restart: always
+        volumes:
+            - ${SHARED_DIRECTORY_PATH}/.docker-rabbitmq-local/var/log:/var/log/rabbitmq/
+        environment:
+            RABBITMQ_DEFAULT_USER: 'user'
+            RABBITMQ_DEFAULT_PASS: 'password'
+        ports:
+            # Forward all the hosts's traffic to RabbitMQ's main port 5672 in the container.
+            - 5672:5672
+            # Same with management plugin's port 15672
+            - 15672:15672

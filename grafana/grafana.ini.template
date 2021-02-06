@@ -1,0 +1,5 @@
+[security]
+admin_password="password"
+
+[users]
+default_theme="light"

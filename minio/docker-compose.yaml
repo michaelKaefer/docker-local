@@ -1,0 +1,27 @@
+version: '3.5'
+
+services:
+
+    minio:
+        container_name: minio
+        image: minio/minio
+        restart: always
+        environment:
+            - TIMEZONE=Europa/Vienna
+            - MINIO_ACCESS_KEY=access-key
+            - MINIO_SECRET_KEY=secret-key
+            - MINIO_BROWSER=on
+        ports:
+            - 9001:9000
+        volumes:
+            - ${SHARED_DIRECTORY_PATH}/.docker-minio-local/data:/data
+        # When deployed on a single drive, MinIO server lets clients access any pre-existing data
+        # in the data directory. For example, if MinIO is started with the command
+        # "minio server /mnt/data", any pre-existing data in the /mnt/data directory would be
+        # accessible to the clients.
+        command: server /data
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+            interval: 30s
+            timeout: 20s
+            retries: 3

@@ -1,0 +1,16 @@
+version: '3.5'
+
+services:
+
+    nginx:
+        container_name: nginx
+        #uses an image that’s built from the Dockerfile in the current directory
+        build: .
+        ports:
+            - "80:80"
+        restart: always
+        volumes:
+            - ${LOCAL_WEB_DIRECTORY}:/usr/share/nginx/html
+            - ${LOCAL_SITES_AVAILABLE_DIRECTORY}:/etc/nginx/sites-available
+            - ${LOCAL_SITES_ENABLED_DIRECTORY}:/etc/nginx/sites-enabled
+            - ${LOCAL_CONFIG_FILE}:/etc/nginx/nginx.conf

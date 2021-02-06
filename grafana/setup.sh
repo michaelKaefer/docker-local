@@ -1,0 +1,1 @@
+wget https://raw.githubusercontent.com/grafana/loki/v1.6.0/production/docker-compose.yaml
