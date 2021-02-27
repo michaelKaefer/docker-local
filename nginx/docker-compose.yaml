@@ -1,16 +1,13 @@
-version: '3.5'
+version: '3.6'
 
 services:
 
     nginx:
+        image: nginx:1.18.0-alpine
         container_name: nginx
-        #uses an image that’s built from the Dockerfile in the current directory
-        build: .
-        ports:
-            - "80:80"
         restart: always
+        ports:
+            - "3005:80"
         volumes:
-            - ${LOCAL_WEB_DIRECTORY}:/usr/share/nginx/html
-            - ${LOCAL_SITES_AVAILABLE_DIRECTORY}:/etc/nginx/sites-available
-            - ${LOCAL_SITES_ENABLED_DIRECTORY}:/etc/nginx/sites-enabled
-            - ${LOCAL_CONFIG_FILE}:/etc/nginx/nginx.conf
+            - ./demo-app/usr/share/nginx/html:/usr/share/nginx/html
+            - ./demo-app/etc/nginx/conf.d:/etc/nginx/conf.d
